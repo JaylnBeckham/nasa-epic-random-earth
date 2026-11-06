@@ -4,7 +4,7 @@
 
 ## How it works
 - <function_1>: <Gets photos from NASA's EPIC API from a specific day the user inputs>
-- <function_2>: <it Counts how many photos were taken of the Earth on the day the user inputs>
+- <function_2>: <it displays how many photos were taken of the Earth on the day the user inputs>
 - <function_3>: <Goes through the pictures NASA took and gives the image name, date, time, and a link to the picture>
 
 ## How to run
