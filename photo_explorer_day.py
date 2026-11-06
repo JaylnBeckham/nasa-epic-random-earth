@@ -39,7 +39,7 @@ def main():
 
     print("Welcome to NASA's Earth Photo Explorer!")
 # Enter your NASA API key
-    api_key = "YOUR_API_KEY"
+    api_key = "zb8m6zJbKfMF7NMRfjKD7JCr6jMCFCqrNfKKTHjD"
 # Asks the user for a date
     date = input("Enter a date (YYYY-MM-DD): ")
 # Gets pictures using the user's date
