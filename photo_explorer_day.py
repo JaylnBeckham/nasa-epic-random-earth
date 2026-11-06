@@ -1,67 +1,62 @@
 import requests
-
-# Function 1: Gets photos from NASA's EPIC API
+# This function gets pictures from NASA's EPIC API
 def get_photos(api_key, date):
-# Create the URL using the date entered
-    url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}?api_key={api_key}"
-# Request information from NASA
-    try:
-        response = requests.get(url, timeout=15)
-# Check if the request was successful
-        if response.status_code == 200:
-            photos = response.json()
-            return photos
+# Uses the date entered by the user
+    url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}?api_key={demo_key}"
+# Sends a request to NASA
+    response = requests.get(url)
+# Checks if the request was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Could not retrieve pictures.")
+        return None
+# This function counts how many pictures NASA took
+def count_photos(photos):
+    return len(photos)
+# This function displays information about each picture
+def show_photos(photos):
+
+    for photo in photos:
+# Gets the image name and date from the dictionary
+        image_name = photo["image"]
+        photo_date = photo["date"]
+
+# Gets the year, month, and day
+        year = photo_date[0:4]
+        month = photo_date[5:7]
+        day = photo_date[8:10]
+
+# Creates a link to view the picture
+        image_url = f"https://epic.gsfc.nasa.gov/archive/natural/{year}/{month}/{day}/png/{image_name}.png"
+
+        print("Image Name:", image_name)
+        print("Date and Time:", photo_date)
+        print("Image Link:", image_url)
+        print()
+# Main program
+def main():
+
+    print("Welcome to NASA's Earth Photo Explorer!")
+# Enter your NASA API key
+    api_key = "YOUR_API_KEY"
+# Asks the user for a date
+    date = input("Enter a date (YYYY-MM-DD): ")
+# Gets pictures using the user's date
+    photos = get_photos(api_key, date)
+# Checks if pictures were found
+    if photos is not None:
+
+        if len(photos) > 0:
+# Displays the total number of pictures
+            total = count_photos(photos)
+            print("Total pictures found:", total)
+            print()
+# Displays information about the pictures
+            show_photos(photos)
 
         else:
-            print("Error: NASA could not retrieve the data.")
-            print("Status code:", response.status_code)
-            return None
-
-    except requests.exceptions.RequestException:
-        print("Error: Could not connect to NASA.")
-        return None
-# Function 2: Count how many pictures were taken
-def count_photos(photos):
-# Count the number of pictures in the list
-    total = len(photos)
-
-    return total
-# Function 3: Display the pictures and their information
-def show_photos(photos):
-# Go through each picture in the list
-    for photo in photos:
-# Get the image name and date from the dictionary
-        image = photo["image"]
-        date = photo["date"]
-# Separate the date from the time
-        date_only = date.split(" ")[0]
-# Change the date format for the image link
-        formatted_date = date_only.replace("-", "/")
-# Create a link to the actual NASA picture
-        link = f"https://epic.gsfc.nasa.gov/archive/natural/{formatted_date}/png/{image}.png"
-# Display the picture information
-        print("Image:", image)
-        print("Date and Time:", date)
-        print("Photo Link:", link)
-        print("------------------------")
-# Main program
-# NASA's public demo API key
-api_key = "DEMO_KEY"
-# Ask the user to enter a date
-date = input("Enter a date (YYYY-MM-DD): ")
-# Retrieve the photos
-photos = get_photos(api_key, date)
-# Check if the request failed
-if photos is None:
-    print("Unable to display photos.")
-# Check if NASA returned no pictures
-elif len(photos) == 0:
-    print("No pictures were taken on this date.")
-
-else:
-# Count the pictures
-    total = count_photos(photos)
-
-    print("Total pictures taken:", total)
-# Display the picture information
-    show_photos(photos)
+            print("No pictures were found for that date.")
+# Runs the program
+if __name__ == "__main__":
+    main()
