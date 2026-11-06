@@ -2,7 +2,7 @@ import requests
 # This function gets pictures from NASA's EPIC API
 def get_photos(api_key, date):
 # Uses the date entered by the user
-    url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}?api_key={demo_key}"
+    url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}?api_key={api_key}"
 # Sends a request to NASA
     response = requests.get(url)
 # Checks if the request was successful
